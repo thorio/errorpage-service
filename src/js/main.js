@@ -1,3 +1,1 @@
-import log from "./hello";
-
-log("hello world!");
+// nothing here

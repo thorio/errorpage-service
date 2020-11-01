@@ -4,8 +4,10 @@ const gulp = require("gulp"),
 	cache = require("gulp-cached"),
 	less = require("gulp-less"),
 	uglify = require("gulp-uglify"),
+	htmlmin = require("gulp-htmlmin"),
+	inlineSource = require("gulp-inline-source"),
+	nunjucks = require("gulp-nunjucks"),
 	sourcemaps = require('gulp-sourcemaps'),
-	gulpIf = require('gulp-if'),
 	source = require("vinyl-source-stream"),
 	buffer = require('vinyl-buffer'),
 	browserify = require("browserify"),
@@ -13,12 +15,10 @@ const gulp = require("gulp"),
 	babelify = require("babelify"),
 	errorify = require("errorify"),
 	browserSync = require("browser-sync").create(),
-	yargs = require("yargs"),
 	del = require("del");
 
 const src_dir = "./src",
-	build_dir = "./build",
-	production = yargs.argv.production;
+	build_dir = "./build";
 
 const browserifyInstance = browserify({
 		entries: [`main.js`],
@@ -55,10 +55,30 @@ function scripts() {
 		.pipe(source("bundle.js"))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(gulpIf(production, uglify({ output: { comments: "some" } })))
+		.pipe(uglify({ output: { comments: "some" } }))
 		.pipe(sourcemaps.write('./', { sourceRoot: "source://js" }))
 		.pipe(gulp.dest(`${build_dir}/js`))
 		.on("end", browserSync.reload);
+}
+
+function templates() {
+	return gulp.src(`${src_dir}/templates/**/[^_]*.njk`)
+		.pipe(nunjucks.compile({}))
+		.pipe(gulp.dest(build_dir))
+		.on("end", browserSync.reload);
+}
+
+function inline() {
+	return gulp.src(`${build_dir}/*.html`)
+		.pipe(inlineSource({
+			rootpath: build_dir,
+			attribute: false,
+		}))
+		.pipe(htmlmin({
+			collapseWhitespace: true,
+			removeComments: false,
+		}))
+		.pipe(gulp.dest(`${build_dir}/inlined/`));
 }
 
 function clean() {
@@ -79,11 +99,12 @@ async function watch() {
 	watchify(browserifyInstance)
 		.plugin(errorify);
 
-	gulp.watch(`${src_dir}/static`, staticFiles);
-	gulp.watch(`${src_dir}/js`, scripts);
-	gulp.watch(`${src_dir}/css`, styles);
+	gulp.watch(`${src_dir}/static`, gulp.series(staticFiles, inline));
+	gulp.watch(`${src_dir}/js`, gulp.series(scripts, inline));
+	gulp.watch(`${src_dir}/css`, gulp.series(styles, inline));
+	gulp.watch(`${src_dir}/templates`, gulp.series(templates, inline));
 }
 
-const build = gulp.parallel(staticFiles, styles, scripts);
+const build = gulp.series(gulp.parallel(staticFiles, styles, scripts, templates), inline);
 
 module.exports = { build, watch, clean };
