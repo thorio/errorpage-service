@@ -1,0 +1,43 @@
+{
+	"name": "javascript-static-template",
+	"version": "1.0.0",
+	"dependencies": {},
+	"devDependencies": {
+		"@babel/core": "^7.10.5",
+		"@babel/preset-env": "^7.10.4",
+		"babelify": "^10.0.0",
+		"browser-sync": "^2.26.10",
+		"browserify": "^16.5.1",
+		"del": "^5.1.0",
+		"errorify": "^0.3.1",
+		"eslint": "^7.5.0",
+		"gulp": "^4.0.2",
+		"gulp-cached": "^1.1.1",
+		"gulp-concat": "^2.6.1",
+		"gulp-if": "^3.0.0",
+		"gulp-less": "^4.0.1",
+		"gulp-sourcemaps": "^2.6.5",
+		"gulp-uglify": "^3.0.2",
+		"vinyl-buffer": "^1.0.1",
+		"vinyl-source-stream": "^2.0.0",
+		"watchify": "^3.11.1",
+		"yargs": "^15.4.1"
+	},
+	"scripts": {
+		"build": "npx gulp build",
+		"buildProduction": "npx gulp build --production",
+		"test": "npx eslint src/**/*.js",
+		"clean": "npx gulp clean",
+		"watch": "npx gulp watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thorio/javascript-static-template.git"
+	},
+	"author": "thorou",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/thorio/javascript-static-template/issues"
+	},
+	"homepage": "https://github.com/thorio/javascript-static-template#readme"
+}
