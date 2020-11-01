@@ -1,11 +1,7 @@
 {
 	"name": "javascript-static-template",
 	"version": "1.0.0",
-	"dependencies": {
-		"gulp-htmlmin": "^5.0.1",
-		"gulp-inline-source": "^4.0.0",
-		"gulp-nunjucks": "^5.1.0"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"@babel/core": "^7.12.3",
 		"@babel/preset-env": "^7.12.1",
@@ -18,7 +14,10 @@
 		"gulp": "^4.0.2",
 		"gulp-cached": "^1.1.1",
 		"gulp-concat": "^2.6.1",
+		"gulp-htmlmin": "^5.0.1",
+		"gulp-inline-source": "^4.0.0",
 		"gulp-less": "^4.0.1",
+		"gulp-nunjucks": "^5.1.0",
 		"gulp-sourcemaps": "^2.6.5",
 		"gulp-uglify": "^3.0.2",
 		"vinyl-buffer": "^1.0.1",
@@ -27,19 +26,18 @@
 	},
 	"scripts": {
 		"build": "npx gulp build",
-		"buildProduction": "npx gulp build --production",
 		"test": "npx eslint src/**/*.js",
 		"clean": "npx gulp clean",
 		"watch": "npx gulp watch"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/thorio/javascript-static-template.git"
+		"url": "git+https://github.com/thorio/errorpage-service.git"
 	},
 	"author": "thorou",
 	"license": "GPL-3.0",
 	"bugs": {
-		"url": "https://github.com/thorio/javascript-static-template/issues"
+		"url": "https://github.com/thorio/errorpage-service/issues"
 	},
-	"homepage": "https://github.com/thorio/javascript-static-template#readme"
+	"homepage": "https://github.com/thorio/errorpage-service#readme"
 }
