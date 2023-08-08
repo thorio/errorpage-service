@@ -1,3 +1,5 @@
+# Superseded by https://github.com/thorio/website
+
 # errorpage-service
 
 Service that delivers HTML errorpages, intended for use with [Traefik](https://github.com/traefik/traefik).
